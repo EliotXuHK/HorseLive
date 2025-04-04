@@ -11,7 +11,7 @@ import HorseChatScreen from '../screens/HorseChat/HorseChatScreen';
 
 // Define our tab navigator params
 type RootTabParamList = {
-  '入门': undefined;
+  '新手': undefined;
   '爱好': undefined;
   '直播': undefined;
   'HorseChat': undefined;
@@ -27,7 +27,7 @@ const AppNavigator = () => {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName: any = 'home';
 
-            if (route.name === '入门') {
+            if (route.name === '新手') {
               iconName = focused ? 'home' : 'home-outline';
             } else if (route.name === '爱好') {
               iconName = focused ? 'heart' : 'heart-outline';
@@ -45,7 +45,7 @@ const AppNavigator = () => {
           headerShown: false,
         })}
       >
-        <Tab.Screen name="入门" component={GettingStartedScreen} />
+        <Tab.Screen name="新手" component={GettingStartedScreen} />
         <Tab.Screen name="爱好" component={HobbiesScreen} />
         <Tab.Screen name="直播" component={LiveStreamScreen} />
         <Tab.Screen name="HorseChat" component={HorseChatScreen} />

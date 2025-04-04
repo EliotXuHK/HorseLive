@@ -4,8 +4,8 @@ import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 const GettingStartedScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>入门</Text>
-      <Text style={styles.content}>欢迎来到入门页面！</Text>
+      <Text style={styles.title}>新手</Text>
+      <Text style={styles.content}>欢迎来到新手页面！</Text>
     </SafeAreaView>
   );
 };
