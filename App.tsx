@@ -23,6 +23,8 @@ type RootTabParamList = {
 const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export default function App() {
+  console.log('App rendered - setting up navigation');
+  
   return (
     <SafeAreaProvider>
       <NavigationContainer>
