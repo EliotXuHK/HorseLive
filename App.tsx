@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { NavigationContainer, useNavigationContainerRef } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -11,7 +11,6 @@ import HobbiesScreen from './src/screens/Hobbies/HobbiesScreen';
 import LiveStreamScreen from './src/screens/LiveStream/LiveStreamScreen';
 import HorseChatScreen from './src/screens/HorseChat/HorseChatScreen';
 import { Colors } from './src/constants';
-import { FloatingChatButton } from './src/components/common';
 
 // 定义底部导航参数类型
 type RootTabParamList = {
@@ -25,27 +24,10 @@ const Tab = createBottomTabNavigator<RootTabParamList>();
 
 export default function App() {
   console.log('App rendered - setting up navigation');
-  const [currentRouteName, setCurrentRouteName] = useState<string>('');
-  const navigationRef = useNavigationContainerRef();
-  
-  // 监听路由变化，更新当前路由名称
-  useEffect(() => {
-    const unsubscribe = navigationRef.addListener('state', () => {
-      const currentRoute = navigationRef.getCurrentRoute();
-      if (currentRoute) {
-        setCurrentRouteName(currentRoute.name);
-      }
-    });
-    
-    return unsubscribe;
-  }, [navigationRef]);
-  
-  // 只在非HorseChat页面显示悬浮按钮
-  const shouldShowFloatingButton = currentRouteName !== 'HorseChat';
   
   return (
     <SafeAreaProvider>
-      <NavigationContainer ref={navigationRef}>
+      <NavigationContainer>
         <Tab.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
@@ -74,9 +56,6 @@ export default function App() {
           <Tab.Screen name="直播" component={LiveStreamScreen} />
           <Tab.Screen name="HorseChat" component={HorseChatScreen} />
         </Tab.Navigator>
-        
-        {/* 悬浮聊天按钮，仅在非聊天页面显示 */}
-        {shouldShowFloatingButton && <FloatingChatButton />}
       </NavigationContainer>
       <StatusBar style="auto" />
     </SafeAreaProvider>

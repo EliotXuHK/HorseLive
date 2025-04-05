@@ -171,24 +171,46 @@ const HorseChatScreen = () => {
       
       if (!cameraResult.canceled && cameraResult.assets && cameraResult.assets[0]) {
         // 提示用户输入关于图片的问题
-        Alert.prompt(
-          '添加问题',
-          '请输入关于这张图片的问题',
-          [
-            {
-              text: '取消',
-              style: 'cancel',
-            },
-            {
-              text: '发送',
-              onPress: (text) => {
-                if (text) {
-                  sendMessage(text, cameraResult.assets[0].uri);
-                }
+        if (Platform.OS === 'ios') {
+          Alert.prompt(
+            '添加问题',
+            '请输入关于这张图片的问题',
+            [
+              {
+                text: '取消',
+                style: 'cancel',
               },
-            },
-          ]
-        );
+              {
+                text: '发送',
+                onPress: (text) => {
+                  if (text) {
+                    sendMessage(text, cameraResult.assets[0].uri);
+                  }
+                },
+              },
+            ]
+          );
+        } else {
+          // Android上使用Alert.alert并自定义一个输入框
+          Alert.alert(
+            '添加问题',
+            '请输入关于这张图片的问题',
+            [
+              {
+                text: '取消',
+                style: 'cancel',
+              },
+              {
+                text: '发送',
+                onPress: () => {
+                  // Android上我们可以使用默认问题
+                  const defaultQuestion = '这张图片里的赛马情况是什么样的？';
+                  sendMessage(defaultQuestion, cameraResult.assets[0].uri);
+                },
+              },
+            ]
+          );
+        }
       }
     } catch (error) {
       console.error('Error taking picture:', error);
@@ -213,24 +235,46 @@ const HorseChatScreen = () => {
       if (!result.canceled && result.assets && result.assets[0]) {
         const uri = result.assets[0].uri;
         // 提示用户输入关于图片的问题
-        Alert.prompt(
-          '添加问题',
-          '请输入关于这张图片的问题',
-          [
-            {
-              text: '取消',
-              style: 'cancel',
-            },
-            {
-              text: '发送',
-              onPress: (text) => {
-                if (text) {
-                  sendMessage(text, uri);
-                }
+        if (Platform.OS === 'ios') {
+          Alert.prompt(
+            '添加问题',
+            '请输入关于这张图片的问题',
+            [
+              {
+                text: '取消',
+                style: 'cancel',
               },
-            },
-          ]
-        );
+              {
+                text: '发送',
+                onPress: (text) => {
+                  if (text) {
+                    sendMessage(text, uri);
+                  }
+                },
+              },
+            ]
+          );
+        } else {
+          // Android上使用Alert.alert并自定义一个输入框
+          Alert.alert(
+            '添加问题',
+            '请输入关于这张图片的问题',
+            [
+              {
+                text: '取消',
+                style: 'cancel',
+              },
+              {
+                text: '发送',
+                onPress: () => {
+                  // Android上我们可以使用默认问题
+                  const defaultQuestion = '这张图片里的赛马情况是什么样的？';
+                  sendMessage(defaultQuestion, uri);
+                },
+              },
+            ]
+          );
+        }
       }
     } catch (error) {
       console.error('Error picking image:', error);
@@ -251,10 +295,9 @@ const HorseChatScreen = () => {
       <View style={[styles.messageContainer, isUser ? styles.userMessage : styles.assistantMessage]}>
         {!isUser && (
           <View style={styles.avatarContainer}>
-            <Image
-              source={require('../../../assets/horsegpt_avatar.png')}
-              style={styles.avatar}
-            />
+            <View style={[styles.userAvatarPlaceholder, { backgroundColor: '#3498db' }]}>
+              <Ionicons name="chatbubble" size={20} color="#fff" />
+            </View>
           </View>
         )}
         
